@@ -2,6 +2,7 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -18,6 +19,14 @@ public class Post {
 
     @OneToMany(mappedBy = "postComment", cascade =  CascadeType.ALL, orphanRemoval = true)
     private List<PostComment> postComments;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_id")
+    private Users users;
+
+    @Column(name = "date")
+    @Temporal(TemporalType.DATE)
+    Date date;
 
     public Post() {
     }
@@ -50,12 +59,29 @@ public class Post {
         this.postComments = postComments;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", postComment=" + postComments +
+                ", postComments=" + postComments +
+                ", date=" + date +
                 '}';
     }
 }

@@ -2,6 +2,8 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "postComment")
 public class PostComment {
@@ -17,6 +19,14 @@ public class PostComment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_id")
+    private Users users;
+
+    @Column(name = "date")
+    @Temporal(TemporalType.DATE)
+    Date date;
 
     public PostComment() {
     }
@@ -45,12 +55,29 @@ public class PostComment {
         this.post = post;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
+    }
+
     @Override
     public String toString() {
         return "PostComment{" +
                 "id=" + id +
                 ", text='" + text + '\'' +
                 ", post=" + post +
+                ", date=" + date +
                 '}';
     }
 }
